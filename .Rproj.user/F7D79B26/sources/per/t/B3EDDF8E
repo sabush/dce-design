@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1570876140839.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1347462609",
+    "id" : "B3EDDF8E",
+    "lastKnownWriteTime" : 1570915409,
+    "last_content_update" : 1570915409665,
+    "path" : "~/Documents/RProjects/DCEDesign/CommonFunctions.R",
+    "project_path" : "CommonFunctions.R",
+    "properties" : {
+        "cursorPosition" : "199,42",
+        "scrollLine" : "192",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
