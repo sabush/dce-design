@@ -16,9 +16,13 @@ des_detail <- assess_design(levels, generators = gens, print_detail = F)
 
 des_detail <- assess_design(levels, generators = gens)
 
+gens <- rbind(c(1,1,0), c(0,0,1))
+des_detail <- assess_design(levels, generators = gens)
+
+
 des_detail <- assess_design(levels, generators = gens, treatments = tmts)
 
-
+# !!! Something is wrong with the efficiency % !!! - the choise sets are not being constructed properly
 
 
 
