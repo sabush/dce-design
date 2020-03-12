@@ -19,6 +19,16 @@ ui <- dashboardPage(skin = "purple",
   ),
   
   dashboardBody(
+    tags$head(tags$style(HTML('
+      .box { margin-bottom: 0; } 
+
+      [class*="col-lg-"],[class*="col-md-"],
+      [class*="col-sm-"],[class*="col-xs-"]{
+        padding-right:0.00025 !important;
+        padding-left:0.00025 !important;
+      }
+    '))),
+    
     tabItems(
       tabItem("testdes", test_designUI(id = "testdes")), 
       tabItem("constdes", construct_designUI(id = "constdes"))#, 
