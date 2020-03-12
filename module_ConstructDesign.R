@@ -7,7 +7,7 @@ construct_designUI <- function(id) {
       h3("Design Dimensions"),
       numericInput(ns("num_fac"), "Number of factors", 2, min = 2,
                    max = 16),
-      numericInput(ns("num_opt"), "Number of options per choice Set", 2, min = 2,
+      numericInput(ns("num_opt"), "Number of options per choice set", 2, min = 2,
                    max = 8)
     ),
     fluidRow(

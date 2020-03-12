@@ -78,7 +78,7 @@ construct_contrast_interactions <- function(level_vec, interactions = 'all'){
     stop("Set of interactions must either be a matrix or 'all'")
   }
   
-  print(working_interactions)
+  # print(working_interactions)
   
   
   allopts <- matrix(
@@ -97,7 +97,7 @@ construct_contrast_interactions <- function(level_vec, interactions = 'all'){
     bmat <- cbind(bmat, bset)
   }
   
-  print(bmat)
+  # print(bmat)
   # Add in interactions
   indices <- cbind(rep(1:length(level_vec), level_vec-1), 1:sum(level_vec-1))
   for(i in 1:nrow(working_interactions)){
@@ -114,9 +114,10 @@ construct_contrast_interactions <- function(level_vec, interactions = 'all'){
     
     if(is.null(dim(int_contrasts))) int_contrasts <- matrix(int_contrasts, ncol = 1)
     
+    
     bmat <- cbind(bmat, int_contrasts)
   }
-  
+  print(bmat)
   
   # Normalise columns and transpose
   bmat <- t(bmat)/sqrt(diag(t(bmat) %*% bmat))
@@ -232,7 +233,8 @@ assess_design_interactions <- function(choice_sets, level_vec, interactions, pri
                              level_vec = level_vec, 
                              n_opts = n_opts)
   
-  bmat <- construct_contrast_interactions(level_vec)
+  bmat <- construct_contrast_interactions(level_vec, interactions)
+  print(bmat)
   cmat <- construct_C(bmat, lambda)
   
   # Calculate Det C

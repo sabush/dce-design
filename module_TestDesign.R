@@ -3,58 +3,114 @@ test_designUI <- function(id) {
   ns <- NS(id)
   
   fluidPage(
-    fluidRow(
-      width = 12,
-      h3("Design Dimensions"),
-      numericInput(ns("num_fac"), "Number of factors", 2, min = 2,
-                   max = 16),
-      numericInput(ns("num_opt"), "Number of options per choice Set", 2, min = 2,
-                   max = 8)
-    ),
-    fluidRow(
-      width = 12,
-      actionButton(inputId = ns("enter_levels"), label = "Enter Levels"),
-      actionButton(inputId = ns("reset"), label = "Reset"),
-      h1(textOutput(ns("enter_design")), style = "font-size:0.1px"),
-      h1(textOutput(ns("display_output")), style = "font-size:0.1px")
-    ),
     
-    # Enter choice sets
-    # conditionalPanel('output.enter_design == "TRUE"', ns = ns, 
-    fluidRow(
-      width = 12,
-      h3("Design Details"),
-      column(
-        width = 4,
+    box(width = 4,title = "Design Dimensions",
+        numericInput(ns("num_fac"), "Number of factors", 2, min = 2,
+                     max = 16),
+        numericInput(ns("num_opt"), "Number of options per choice set", 2, min = 2,
+                     max = 8),
+        radioButtons(ns("dce_effects"), "Effects to be estimated", 
+                     choices = c("Main effects only" = "me", 
+                                 "Main effects plus all two factor interactions" = "me_all_2fi", 
+                                 "Main effects plus selected two factor interactions" = "me_sel_2fi")),
+        conditionalPanel('input.dce_effects == "me_sel_2fi"', ns = ns,
+                         width = 12,
+                         strong("Enter the two factor interactions here:"),
+                         p("One interaction per row, right click on table to add or remove rows."),
+                         rHandsontableOutput(ns("hot_ints"))),
+        br(),
+        actionButton(inputId = ns("enter_levels"), label = "Enter Levels"),
+        actionButton(inputId = ns("reset"), label = "Reset"),
+        h1(textOutput(ns("enter_design")), style = "font-size:0.1px"),
+        h1(textOutput(ns("display_output")), style = "font-size:0.1px"),
         h4("Enter the number of levels for each factor:"),
         rHandsontableOutput(ns("hot"))
-      ),
-      column(
-        width = 8,
-        h4("Enter the choice sets here:"),
-        rHandsontableOutput(ns("hot_chset")), 
-        p(HTML("Each row is a single choice set. Levels are labelled (0,1,...,<i>l</i>), where <i>l</i> is the number of levels for each factor.")),
-        p("OptA_FacB corresponds to the level of factor B in option A of the choice set. "),
-        p("Right click on a cell of the table to add or remove choice sets.")
-      )
     ),
-    fluidRow(
-      width = 12,
-      actionButton(inputId = ns("test_design"), label = "Test Design"),
-      br()
-      # )
-    ),
-    # Display Output
-    conditionalPanel('output.display_output == "TRUE"', ns = ns, 
-                     width = 12, 
-                     column(width = 12,
+    
+    column(width = 8,
+           conditionalPanel('output.enter_design == "TRUE"', ns = ns,
+                            h3("Enter the choice sets here:"),
+                            p(HTML("Each row is a single choice set. Levels are labelled (0,1,...,<i>l</i>), where <i>l</i> is the number of levels for each factor.")),
+                            p("OptA_FacB corresponds to the level of factor B in option A of the choice set. "),
+                            p("Right click on a cell of the table to add or remove choice sets."),
+                            rHandsontableOutput(ns("hot_chset")), 
+                            actionButton(inputId = ns("test_design"), label = "Test Design")
+           ),
+           br(),
+           conditionalPanel('output.display_output == "TRUE"', ns = ns, 
                             h3("Design Assessment:"),
                             p('The information matrix for this design is:'),
                             uiOutput(ns('FImatrix')),
                             htmlOutput(ns("designInfo"))
-                     )
-                     
+           )
     )
+    
+    # fluidRow(
+    #   width = 12,
+    #   h3("Design Dimensions"),
+    #   column(width = 6,
+    #          numericInput(ns("num_fac"), "Number of factors", 2, min = 2,
+    #                       max = 16),
+    #          numericInput(ns("num_opt"), "Number of options per choice set", 2, min = 2,
+    #                       max = 8)),
+    #   column(width = 6,
+    #          radioButtons(ns("dce_effects"), "Effects to be estimated", 
+    #                       choices = c("Main effects only" = "me", 
+    #                                   "Main effects plus all two factor interactions" = "me_all_2fi", 
+    #                                   "Main effects plus selected two factor interactions" = "me_sel_2fi")),
+    #          conditionalPanel('input.dce_effects == "me_sel_2fi"', ns = ns,
+    #                           width = 12,
+    #                           strong("Enter the two factor interactions here:"),
+    #                           p("One interaction per row, right click on table to add or remove rows."),
+    #                           rHandsontableOutput(ns("hot_ints"))
+    #          )
+    #   )),
+    # 
+    # 
+    # fluidRow(
+    #   width = 12,
+    #   actionButton(inputId = ns("enter_levels"), label = "Enter Levels"),
+    #   actionButton(inputId = ns("reset"), label = "Reset"),
+    #   h1(textOutput(ns("enter_design")), style = "font-size:0.1px"),
+    #   h1(textOutput(ns("display_output")), style = "font-size:0.1px")
+    # ),
+    # 
+    # # Enter choice sets
+    # # conditionalPanel('output.enter_design == "TRUE"', ns = ns, 
+    # fluidRow(
+    #   width = 12,
+    #   h3("Design Details"),
+    #   column(
+    #     width = 4,
+    #     h4("Enter the number of levels for each factor:"),
+    #     rHandsontableOutput(ns("hot"))
+    #   ),
+    #   column(
+    #     width = 8,
+    #     h4("Enter the choice sets here:"),
+    #     rHandsontableOutput(ns("hot_chset")), 
+    #     p(HTML("Each row is a single choice set. Levels are labelled (0,1,...,<i>l</i>), where <i>l</i> is the number of levels for each factor.")),
+    #     p("OptA_FacB corresponds to the level of factor B in option A of the choice set. "),
+    #     p("Right click on a cell of the table to add or remove choice sets.")
+    #   )
+    # ),
+    # fluidRow(
+    #   width = 12,
+    #   actionButton(inputId = ns("test_design"), label = "Test Design"),
+    #   br()
+    #   # )
+    # ),
+    # # Display Output
+    # conditionalPanel('output.display_output == "TRUE"', ns = ns, 
+    #                  width = 12, 
+    #                  column(width = 12,
+    #                         h3("Design Assessment:"),
+    #                         p('The information matrix for this design is:'),
+    #                         uiOutput(ns('FImatrix')),
+    #                         htmlOutput(ns("designInfo"))
+    #                  )
+    #                  
+    # )
   )
   
 }
@@ -74,6 +130,24 @@ test_design <- function(input, output, session) {
   observeEvent(input$test_design, {values$display_output <- 'TRUE'})
   observeEvent(input$reset, {values$enter_design <- 'FALSE'})
   observeEvent(input$reset, {values$display_output <- 'FALSE'})
+  
+  
+  int_table <- reactive({
+    int_tab <- NULL
+    if (!is.null(input$hot_ints)){ #If hot changes,
+      int_tab <- hot_to_r(input$hot_ints) #then update int_tab and also update int_tab in values,
+      values[['int_tab']] <- int_tab
+    } else if(!is.null(isolate(values$int_tab))){ #otherwise use the int_tab in values.
+      int_tab <- isolate(values$int_tab)
+    } else {
+      req(input$num_fac)
+      int_tab <- data.frame(Factor1 = c(1),
+                            Factor2 = c(2))
+      values[['int_tab']] <- int_tab
+      values$reset_val <- 1
+    }
+    int_tab
+  }) %>% debounce(1000) #debounce slows down so that reactive expression gets less "chatty"
   
   myDF <- reactive({
     DF <- NULL
@@ -98,7 +172,13 @@ test_design <- function(input, output, session) {
              need(!anyNA(values$DF[,1]),"The set of levels contains NA values"))
     choicesets <- as.matrix(values$chset)
     levels <- values$DF[,1]
-    assess_design_main_effect(choicesets, levels, print_detail = F)
+    if(input$dce_effects == 'me'){
+      assess_design_main_effect(choicesets, levels, print_detail = F)
+    } else if (input$dce_effects == 'me_all_2fi'){
+      assess_design_interactions(choicesets, levels, interactions = 'all', print_detail = F)
+    } else if (input$dce_effects == 'me_sel_2fi'){
+      assess_design_interactions(choicesets, levels, interactions = int_table, print_detail = F)
+    }
   })
   
   myDF_chset <- reactive({
@@ -139,6 +219,12 @@ test_design <- function(input, output, session) {
     if (!is.null(chset)) rhandsontable(chset)
   })
   
+  output$hot_ints = renderRHandsontable({
+    if (isolate(values$reset_val)){
+      int_tab = values$int_tab
+    } else int_tab = int_table()
+    if (!is.null(int_tab)) rhandsontable(int_tab)
+  })
   
   observeEvent(input$enter_levels, {
     req(input$num_fac)
@@ -155,6 +241,8 @@ test_design <- function(input, output, session) {
       pivot_wider(names_from = entry_label, values_from = entry) %>% 
       dplyr::select(-chset)
     
+    # values$data.frame(Factor1 = c(1), Factor2 = c(2))
+    
     values$reset_val <- 1
   })  
   
@@ -167,8 +255,14 @@ test_design <- function(input, output, session) {
   # Show greetings
   output$designInfo <- renderText({
     ad <- assessDesign()
-    HTML(paste0("The determinant of the C matrix is: <b>",signif(ad$detmatc, 4), 
-                "</b><br/>The efficiency compared with complete factorial (optimal): <b>",signif(ad$efficiency,4), '%<b/>')) 
+    
+    if(input$dce_effects == 'me'){
+      HTML(paste0("The determinant of the C matrix is: <b>",signif(ad$detmatc, 4), 
+                  "</b><br/>The efficiency compared with complete factorial (optimal): <b>",signif(ad$efficiency,4), '%<b/>'))
+    } else {
+      HTML(paste0("The determinant of the C matrix is: <b>",signif(ad$detmatc, 4)))
+    } 
+    
   })
   
 }
