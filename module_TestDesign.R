@@ -7,6 +7,7 @@ test_designUI <- function(id) {
     # choice set and the effects to be estimated
     box(width = 4,title = "Design Dimensions", status = "primary", solidHeader = T,
         strong("Enter the number of levels for each factor:"),
+        p("One factor per row, right click on table to add or remove rows."),
         rHandsontableOutput(ns("hot")),
         br(),
         numericInput(ns("num_opt"), "Number of options per choice set", 2, min = 2,
@@ -45,7 +46,7 @@ test_designUI <- function(id) {
                             box(title = "Design Assessment", width = 12,
                                 status = "primary", solidHeader = T,
                                 p('The information matrix for this design is:'),
-                                uiOutput(ns('FImatrix')),
+                                uiOutput(ns('FImatrix'), align = 'center'),
                                 htmlOutput(ns("designInfo"))
                                 )
            )
@@ -200,12 +201,12 @@ test_design <- function(input, output, session) {
     choicesets <- as.matrix(values$chset)
     levels <- values$DF[,1]
     if(input$dce_effects == 'me'){
-      assess_design_main_effect(choicesets, levels, print_detail = F)
+      assess_design(levels, choicesets, print_detail = F)
     } else if (input$dce_effects == 'me_all_2fi'){
-      assess_design_interactions(choicesets, levels, interactions = 'all', 
+      assess_design(levels, choicesets, interactions = 'all', 
                                  print_detail = F)
     } else if (input$dce_effects == 'me_sel_2fi'){
-      assess_design_interactions(choicesets, levels, interactions = int_table, 
+      assess_design(levels, choicesets, interactions = int_table, 
                                  print_detail = F)
     }
   })
@@ -221,11 +222,11 @@ test_design <- function(input, output, session) {
     ad <- assessDesign()
     
     if(input$dce_effects == 'me'){
-      HTML(paste0("The determinant of the C matrix is: <b>",signif(ad$detmatc, 4), 
+      HTML(paste0("The determinant of the information matrix is: <b>",signif(ad$detmatc, 4), 
                   "</b><br/>The efficiency compared with complete factorial (optimal): <b>",
                   signif(ad$efficiency,4), '%<b/>'))
     } else {
-      HTML(paste0("The determinant of the C matrix is: <b>",
+      HTML(paste0("The determinant of the information matrix is: <b>",
                   signif(ad$detmatc, 4)))
     } 
   })

@@ -117,7 +117,6 @@ construct_contrast_interactions <- function(level_vec, interactions = 'all'){
     
     bmat <- cbind(bmat, int_contrasts)
   }
-  print(bmat)
   
   # Normalise columns and transpose
   bmat <- t(bmat)/sqrt(diag(t(bmat) %*% bmat))
@@ -234,7 +233,6 @@ assess_design_interactions <- function(choice_sets, level_vec, interactions, pri
                              n_opts = n_opts)
   
   bmat <- construct_contrast_interactions(level_vec, interactions)
-  print(bmat)
   cmat <- construct_C(bmat, lambda)
   
   # Calculate Det C

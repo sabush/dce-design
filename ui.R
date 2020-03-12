@@ -20,12 +20,19 @@ ui <- dashboardPage(skin = "purple",
   
   dashboardBody(
     tags$head(tags$style(HTML('
-      .box { margin-bottom: 0; } 
+      .box { margin-bottom: 0.01; } 
 
       [class*="col-lg-"],[class*="col-md-"],
       [class*="col-sm-"],[class*="col-xs-"]{
-        padding-right:0.00025 !important;
-        padding-left:0.00025 !important;
+        padding-right: 2px !important;
+        padding-left: 2px !important;
+      }
+      
+      .container-fluid {
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-right: auto;
+        margin-left: auto;
       }
     '))),
     
