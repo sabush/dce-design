@@ -68,6 +68,14 @@ If we click 'Reset' and then 'Enter Choice Sets', we are now able to enter these
 
 ### Example 2: Evaluating a 2<sup>3</sup> design for main effects and selected two-factor interactions  
 
+In this example, we look at how to evaluate a design when we are interested in estimating main effects and selected two factor interactions. Suppose that we have an experiment with three two-level factors, and want to estimate all main effects and the interactions between factors 1 and 3. 
+
+To set this up, we need to enter in the number of levels for each factor. By default, the dashboard will have two two-level factors entered. Select a cell on the table and right click, choosing to 'Insert row below'. Now there will be three rows, which you should set equal to 2. 
+
+We will keep two options per choice set, but need to specify the interactions that we are interested in. Select 'Main effects plus selected two factor interactions' under 'Effects to be estimated'. A new table will appear, where we enter the interactions that we wish to estimate. In our case, we want factors 1 and 3, so in the first row, make sure that the cells of the table contain 1 and 3. To add additional interaction effects, we can add rows to the table. The dashboard should now appear as below.
+
+![Image2a](https://github.com/sabush/dce-design/blob/master/Images/Example2a.png)
+
 ### Example 3: Constructing and evaluating a 2<sup>2</sup> x 3 design for main effects using generators
 
 Note that duplicate choice sets are removed. 

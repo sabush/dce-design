@@ -206,7 +206,7 @@ test_design <- function(input, output, session) {
       assess_design(levels, choicesets, interactions = 'all', 
                                  print_detail = F)
     } else if (input$dce_effects == 'me_sel_2fi'){
-      assess_design(levels, choicesets, interactions = int_table, 
+      assess_design(levels, choicesets, interactions = int_table(), 
                                  print_detail = F)
     }
   })

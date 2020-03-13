@@ -70,7 +70,7 @@ construct_contrast <- function(level_vec){
 }
 
 construct_contrast_interactions <- function(level_vec, interactions = 'all'){
-  if(is.numeric(interactions)){
+  if(is.data.frame(interactions)){
     working_interactions <- interactions
   } else if(interactions == 'all') {
     working_interactions <- t(combn(length(level_vec), 2))
@@ -97,24 +97,28 @@ construct_contrast_interactions <- function(level_vec, interactions = 'all'){
     bmat <- cbind(bmat, bset)
   }
   
-  # print(bmat)
   # Add in interactions
   indices <- cbind(rep(1:length(level_vec), level_vec-1), 1:sum(level_vec-1))
+  
   for(i in 1:nrow(working_interactions)){
     int_set <- working_interactions[i,]
-    #FINISH
-    int1 <- bmat[,indices[indices[,1] == int_set[1],2]]
-    int2 <- bmat[,indices[indices[,1] == int_set[2],2]]
     
+    # Extract columns of the contrast matrix corresponding to each factor
+    int1 <- bmat[,indices[indices[,1] == (int_set[1] %>% unlist()),2]]
+    int2 <- bmat[,indices[indices[,1] == (int_set[2] %>% unlist()),2]]
+    
+    # If there is only one main effect contrast, convert to matrix
     if(is.null(dim(int1))) int1 <- matrix(int1, ncol = 1)
     if(is.null(dim(int2))) int2 <- matrix(int2, ncol = 1)
-    
+
+    # Create interaction effects by cross multiplying main effects contrasts
     r_combs <- expand.grid(1:ncol(int1), 1:ncol(int2))
     int_contrasts <- int1[, r_combs[,1]] * int2[, r_combs[,2]]
     
+    # If there is only one interaction contrast, convert to matrix
     if(is.null(dim(int_contrasts))) int_contrasts <- matrix(int_contrasts, ncol = 1)
     
-    
+    # All new contrasts
     bmat <- cbind(bmat, int_contrasts)
   }
   
@@ -331,7 +335,6 @@ assess_design <- function(level_vec, choicesets = NULL, generators = NULL,
     message("Both choicesets and generators have been defined, the generators will be ignored.")
     generators <- NULL
   }
-  
   
   if(is.null(choicesets)) {
     choicesets <- generate_choiceset(generators, level_vec, treatments, print_detail)

@@ -208,7 +208,7 @@ construct_design <- function(input, output, session) {
                                  interactions = 'all')
     } else if (input$dce_effects == 'me_sel_2fi'){
       assess_design(levels, generators = generators, print_detail = F, 
-                                 interactions = int_table)
+                                 interactions = int_table())
     }
   })
   
