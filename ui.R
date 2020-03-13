@@ -13,8 +13,23 @@ ui <- dashboardPage(skin = "purple",
     width = 250,
     sidebarMenu(
       menuItem("Test a Design", tabName = "testdes"),
-      menuItem("Construct a Design", tabName = "constdes")#,
+      menuItem("Construct a Design", tabName = "constdes"),
       # menuItem("Search for a Design", tabName = "searchdes")
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      p('Created by Stephen Bush (2020)'),
+      p('based on Mathematica code by'),
+      p('Deborah Street and Leonie Burgess')
     )
   ),
   

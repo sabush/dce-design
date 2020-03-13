@@ -1,0 +1,13 @@
+name: DCEDesign
+title: DCEDesign
+username:
+account: stephen-bush
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1938258
+bundleId: 2873815
+url: https://stephen-bush.shinyapps.io/DCEDesign/
+when: 1583987506.01902
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|DCE_Fedorov.R|DCEMainEffect.R|GenerateChoiceSets.R|module_FindDesign.R|module_SearchDesign.R
