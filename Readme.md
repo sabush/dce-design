@@ -27,9 +27,51 @@ The dashboard returns the following infomation:
 
 ### Example 1: Evaluating a 2<sup>2</sup> design for main effects 
 
-### Example 2: Evaluating a 2<sup>2</sup> design for main effects and selected two-factor interactions  
+In this example, we test two designs to see their ability to estimate two main effects. Both designs will have two 2 level factors, and choice sets containing two options.   
+
+To set this design up, we start by entering the number of levels for each factor. By default, the interface will allow for two factors, but you are able to right click on the table to add or remove rows to add or remove factors. We will also keep the number of options equal to 2, and the effects to be estimated as 'Main effects only'. The screen will look like this:
+
+![Image1a](https://github.com/sabush/dce-design/blob/master/Images/Example1a.png)
+
+
+Click on 'Enter Choice Sets' to continue. To start over, click on the 'Reset' button.
+
+Now we enter the choice sets for the first design. The first design that we will test is the following
+
+| Option 1 | Option 2 | 
+| -------- | ---------| 
+| 00       | 11       |
+| 01       | 10       |
+
+So the first choice set will compare the treatment combination with both factors at the 'low' level to the treatment combination with both factors at the 'high' level. This design is the so-called 'foldover design', which is known to be optimal.
+
+To enter in this design, we will populate the first two rows of the choice set table, and right click to remove the third and fourth rows (as they are not needed). Once this is complete, the dashboard should look like the screenshot below.
+
+![Image1b](https://github.com/sabush/dce-design/blob/master/Images/Example1b.png)
+
+Now we are ready to assess the design. Click on 'Test Design'. We now see that the determinant of the information matrix is 0.0625, which has a relative D-efficiency of 100%, whcih means that this design is optimal. 
+
+![Image1c](https://github.com/sabush/dce-design/blob/master/Images/Example1c.png)
+
+Now we test a second design:
+
+| Option 1 | Option 2 | 
+| -------- | ---------| 
+| 00       | 10       |
+| 01       | 11       |
+| 00       | 01       |
+| 01       | 00       |
+
+If we click 'Reset' and then 'Enter Choice Sets', we are now able to enter these choice sets, and click 'Test Design' to test the design. We obtain the below, which shows that this design has 50% relative D-efficiency.
+
+![Image1d](https://github.com/sabush/dce-design/blob/master/Images/Example1d.png)
+
+### Example 2: Evaluating a 2<sup>3</sup> design for main effects and selected two-factor interactions  
 
 ### Example 3: Constructing and evaluating a 2<sup>2</sup> x 3 design for main effects using generators
 
-References:
+Note that duplicate choice sets are removed. 
+
+
+## References:
 D.J. Street and L.B Burgess, The Construction of Optimal Stated Choice Experiments: Theory and Methods, Wiley, 2007.
