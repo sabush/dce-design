@@ -5,9 +5,9 @@ account: stephen-bush
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1938258
-bundleId: 2873815
+bundleId: 2877136
 url: https://stephen-bush.shinyapps.io/DCEDesign/
-when: 1583987506.01902
+when: 1584073295.56619
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: .RData|DCE_Fedorov.R|DCEMainEffect.R|GenerateChoiceSets.R|module_FindDesign.R|module_SearchDesign.R
+ignoredFiles: .RData|DCE_Fedorov.R|DCEMainEffect.R|Example2a.png|Example2b.png|Example2c.png|GenerateChoiceSets.R|module_FindDesign.R|module_SearchDesign.R|Readme.html|Readme.md|Images/Example1a.png|Images/Example1b.png|Images/Example1c.png|Images/Example1d.png

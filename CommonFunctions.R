@@ -276,9 +276,10 @@ assess_design_interactions <- function(choice_sets, level_vec, interactions, pri
 generate_options <- function(treatment, generators, level_vec){
   options <- treatment
   for(i in 1:nrow(generators)){
-    options <- rbind(options, (treatment + generators[i,]) %% level_vec)
+    options <- c(options, (rep(treatment, times = floor(length(generators)/length(level_vec))) + 
+                   generators[i,]) %% level_vec)
   }
-  return(options)
+  return(matrix(options, nrow = 1))
 }
 
 # Construct a set of unique choice sets using generators
@@ -296,7 +297,7 @@ generate_choiceset <- function(generators, level_vec, treatments = NULL, print_d
   
   # Create a list of treatments
   tmtsplit <- split(t(treatments), rep(1:nrow(treatments), each = ncol(treatments)))
-  
+
   # Generate each treatment into a choice set and order alternatives lexicograpgically
   generated_raw <- NULL
   for(i in 1:nrow(generators)){

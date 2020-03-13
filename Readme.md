@@ -76,9 +76,43 @@ We will keep two options per choice set, but need to specify the interactions th
 
 ![Image2a](https://github.com/sabush/dce-design/blob/master/Images/Example2a.png)
 
+Now we will enter our design. The design we are using here is the foldover design, augmented with another four choice sets that are the same as the first four, except that the levels for the first factor in the second option are flipped. The choice sers are:  
+
+| Option 1 | Option 2 | 
+| -------- | ---------| 
+| 000      | 111      |
+| 011      | 100      |
+| 101      | 010      |
+| 110      | 001      |
+| 000      | 011      |
+| 011      | 000      |
+| 101      | 110      |
+| 110      | 101      |
+
+Entering these choice sets into the dashboard, we get the dashboard below (remember that you can add rows to the table using a right click)
+![Image2b](https://github.com/sabush/dce-design/blob/master/Images/Example2b.png)
+
+Testing the design, we see that the D-criterion value is 3.052 x 10<sup>-5</sup>, and that there si some confounding between the main effect of the second factor (second row/column of information matrix) and the interaction between factors 1 and 3 (fourth row/column of information matrix).  
+![Image2c](https://github.com/sabush/dce-design/blob/master/Images/Example2c.png)
+
 ### Example 3: Constructing and evaluating a 2<sup>2</sup> x 3 design for main effects using generators
 
-Note that duplicate choice sets are removed. 
+So far, we have been providing the design to test, but this dashboard will also allow you to use generators to construct a design. This follows the appraoch taken in in Street and Burgess (2007). 
+
+![Image3a](https://github.com/sabush/dce-design/blob/master/Images/Example3a.png)
+
+
+We will use the generator (111, 112) to create choice sets. The way that this works is as follows:
+1. The first option consists of the complete 2<sup>2</sup> x 3 factorial design, which will have 12 runs
+2. To obtain the second option of each choice set, we add 1 to the level of the first factor (modulo 2), 
+add 1 to the level of the second factor (modulo 2), and 1 to the level of the third factor (modulo 3).
+3. To obtain the third option of each choice set, we add 1 to the level of the first factor (modulo 2), 
+add 1 to the level of the second factor (modulo 2), and 2 to the level of the third factor (modulo 3).
+4. Any duplicate choice sets are then removed. 
+
+![Image3b](https://github.com/sabush/dce-design/blob/master/Images/Example3b.png)
+
+![Image3c](https://github.com/sabush/dce-design/blob/master/Images/Example3c.png)
 
 
 ## References:
