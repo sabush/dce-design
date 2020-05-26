@@ -379,17 +379,18 @@ all_choicesets <- function(level_vec, num_opt){
 }
 
 
-find_design_exchange <- function(level_vec, num_opt, num_runs, num_iter, prec = 1e-10){
+find_design_exchange <- function(level_vec, num_opt, num_runs, num_iter, interactions = NULL, prec = 1e-10){
   # Identify all choice sets
   allcs <- all_choicesets(level_vec, num_opt)
   
   # Create a starting design by randomly sampling rows
-  design <- allcs[sample(1:nrow(allcs), num_runs),]
+  design <- allcs[sample(1:nrow(allcs), num_runs, replace = T),]
   design
   
   for(iter in 1:num_iter){
     # Cycle through each run in the design
-    opt_criterion_iter <- assess_design(level_vec, choicesets = design, print_detail = F)$detmatc
+    opt_criterion_iter <- assess_design(level_vec, choicesets = design, 
+                                        interactions = interactions, print_detail = F)$detmatc
     opt_criterion <- opt_criterion_iter
     for(run in 1:num_runs){
       #     Cycle through each possible run
@@ -419,5 +420,6 @@ find_design_exchange <- function(level_vec, num_opt, num_runs, num_iter, prec = 
     
   }
   
-  return(assess_design(level_vec, choicesets = design, print_detail = F))
+  return(assess_design(level_vec, choicesets = design, 
+                       interactions = interactions, print_detail = F))
 }

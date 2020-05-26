@@ -14,7 +14,7 @@ ui <- dashboardPage(skin = "purple",
     sidebarMenu(
       menuItem("Test a Design", tabName = "testdes"),
       menuItem("Construct a Design", tabName = "constdes"),
-      # menuItem("Search for a Design", tabName = "searchdes")
+      menuItem("Search for a Design", tabName = "finddes"),
       br(),
       br(),
       br(),
@@ -53,8 +53,8 @@ ui <- dashboardPage(skin = "purple",
     
     tabItems(
       tabItem("testdes", test_designUI(id = "testdes")), 
-      tabItem("constdes", construct_designUI(id = "constdes"))#, 
-      # tabItem("searchdes", search_designUI(id = "searchdes"))
+      tabItem("constdes", construct_designUI(id = "constdes")), 
+      tabItem("finddes", find_designUI(id = "finddes"))
     )
   )
   
