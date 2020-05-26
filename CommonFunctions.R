@@ -350,3 +350,74 @@ assess_design <- function(level_vec, choicesets = NULL, generators = NULL,
   # assessment <- assess_design_main_effect(choicesets, level_vec, print_detail)
   return(append(list(choicesets = choicesets), assessment))
 }
+
+# This function runs through all possible choice sets and replaes the swap_run^th run in the current design
+# Returns the best swap to make to increase the design criterion
+
+find_best_swap <- function(level_vec, all_sets, curr_design, swap_run){
+  swaps <- sapply(1:nrow(all_sets), 
+                  function(x) assess_design(level_vec, 
+                                            choicesets = rbind(curr_design[-swap_run,], all_sets[x,]), 
+                                            print_detail = F)$detmatc)
+  return(list(swap_val = max(swaps),
+              swap_num = which.max(swaps)))
+}
+
+all_options <- function(level_vec){
+  return(matrix(
+    data.matrix(
+      expand.grid(
+        lapply(level_vec, function(x) 0:(x-1))) %>% 
+        arrange_all()),
+    ncol = length(level_vec)))
+}
+
+all_choicesets <- function(level_vec, num_opt){
+  allopts <- all_options(level_vec)
+  allcs_index <- combn(1:nrow(allopts), num_opt)
+  return(matrix(t(allopts[allcs_index,]), ncol = length(level_vec) * num_opt, byrow = T))
+}
+
+
+find_design_exchange <- function(level_vec, num_opt, num_runs, num_iter, prec = 1e-10){
+  # Identify all choice sets
+  allcs <- all_choicesets(level_vec, num_opt)
+  
+  # Create a starting design by randomly sampling rows
+  design <- allcs[sample(1:nrow(allcs), num_runs),]
+  design
+  
+  for(iter in 1:num_iter){
+    # Cycle through each run in the design
+    opt_criterion_iter <- assess_design(level_vec, choicesets = design, print_detail = F)$detmatc
+    opt_criterion <- opt_criterion_iter
+    for(run in 1:num_runs){
+      #     Cycle through each possible run
+      #       Replace kth run of design with k'th run
+      #       Calculate criterion value and store
+      swaps <- find_best_swap(level_vec, allcs, design, run)
+      #     Check whether any substitution improves criterion value
+      #       If yes: Make substitution and update criterion value
+      if(swaps$swap_val - opt_criterion > 0){
+        design[run,] <- allcs[swaps$swap_num,]
+        opt_criterion <- swaps$swap_val
+        print(paste0("Replace run ",run," in design with choice set ",swaps$swap_num))
+      }
+    }
+    
+    print(paste0("Iteration ",iter,": Criterion Value = ", opt_criterion,
+                 " (Improvement = ", opt_criterion - opt_criterion_iter,")"))
+    
+    # If last run then determine whether any improvement has been made in the last iteration
+    #   If no: stop
+    #   If yes: does value change more than delta?
+    #       If yes: continue
+    #       If no: stop  
+    if((opt_criterion - opt_criterion_iter)/opt_criterion_iter < prec){
+      break()
+    }
+    
+  }
+  
+  return(assess_design(level_vec, choicesets = design, print_detail = F))
+}
