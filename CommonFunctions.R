@@ -354,10 +354,11 @@ assess_design <- function(level_vec, choicesets = NULL, generators = NULL,
 # This function runs through all possible choice sets and replaes the swap_run^th run in the current design
 # Returns the best swap to make to increase the design criterion
 
-find_best_swap <- function(level_vec, all_sets, curr_design, swap_run){
+find_best_swap <- function(level_vec, all_sets, curr_design, swap_run, interactions){
   swaps <- sapply(1:nrow(all_sets), 
                   function(x) assess_design(level_vec, 
                                             choicesets = rbind(curr_design[-swap_run,], all_sets[x,]), 
+                                            interactions = interactions,
                                             print_detail = F)$detmatc)
   return(list(swap_val = max(swaps),
               swap_num = which.max(swaps)))
@@ -396,18 +397,18 @@ find_design_exchange <- function(level_vec, num_opt, num_runs, num_iter, interac
       #     Cycle through each possible run
       #       Replace kth run of design with k'th run
       #       Calculate criterion value and store
-      swaps <- find_best_swap(level_vec, allcs, design, run)
+      swaps <- find_best_swap(level_vec, allcs, design, run, interactions)
       #     Check whether any substitution improves criterion value
       #       If yes: Make substitution and update criterion value
       if(swaps$swap_val - opt_criterion > 0){
         design[run,] <- allcs[swaps$swap_num,]
         opt_criterion <- swaps$swap_val
-        print(paste0("Replace run ",run," in design with choice set ",swaps$swap_num))
+        # print(paste0("Replace run ",run," in design with choice set ",swaps$swap_num))
       }
     }
     
-    print(paste0("Iteration ",iter,": Criterion Value = ", opt_criterion,
-                 " (Improvement = ", opt_criterion - opt_criterion_iter,")"))
+    # print(paste0("Iteration ",iter,": Criterion Value = ", opt_criterion,
+                 # " (Improvement = ", opt_criterion - opt_criterion_iter,")"))
     
     # If last run then determine whether any improvement has been made in the last iteration
     #   If no: stop

@@ -119,14 +119,17 @@ find_design <- function(input, output, session) {
   # Call functions in CommonFunctions.R to assess the enteres design
   assessDesign <- eventReactive(input$perform_search, {
     validate(need(!anyNA(values$DF[,1]),"The set of levels contains NA values"))
-    
     levels <- values$DF[,1]
+    
     if(input$dce_effects == 'me'){
-      find_design_exchange(levels, num_opt, num_runs, num_iter, interactions = NULL, prec = 1e-10)
+      find_design_exchange(levels, input$num_opt, input$num_runs, input$num_iter, 
+                           interactions = NULL, prec = 1e-10)
     } else if (input$dce_effects == 'me_all_2fi'){
-      find_design_exchange(levels, num_opt, num_runs, num_iter, interactions = 'all', prec = 1e-10)
+      find_design_exchange(levels, input$num_opt, input$num_runs, input$num_iter, 
+                           interactions = 'all', prec = 1e-10)
     } else if (input$dce_effects == 'me_sel_2fi'){
-      find_design_exchange(levels, num_opt, num_runs, num_iter, interactions = int_table(), prec = 1e-10)
+      find_design_exchange(levels, input$num_opt, input$num_runs, input$num_iter, 
+                           interactions = int_table(), prec = 1e-10)
     }
   })
   
