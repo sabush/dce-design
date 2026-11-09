@@ -4,7 +4,7 @@ March 2020
 
 ## Outline
 
-This app enables users to rest the ability of a discrete choice design to estimate various effects, and to construct discrete choice designs using generators, based on the method described in Street and Burgess (2007). A live version of this dashboard can be found at: https://stephen-bush.shinyapps.io/DCEDesign/.
+This app enables users to rest the ability of a discrete choice design to estimate various effects, and to construct discrete choice designs using generators, based on the method described in Street and Burgess (2007). A live version of this dashboard can be found at: https://stephen-bush-dcedesign.share.connect.posit.cloud/.
 
 This dashboard is based on Mathematica code accompanying Street and Burgess (2007), written by Leonie Burgess. 
 
